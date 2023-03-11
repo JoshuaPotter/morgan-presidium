@@ -8,7 +8,7 @@ const _users = require('./users');
 
 function initModels(sequelize) {
 	const Channels = _channel(sequelize, DataTypes);
-	const Quotes = _lore(sequelize, DataTypes);
+	const Lore = _lore(sequelize, DataTypes);
 	const Tags = _tags(sequelize, DataTypes);
 	const LoreTags = _tags_lore(sequelize, DataTypes);
 	const Transactions = _transactions(sequelize, DataTypes);
@@ -16,7 +16,7 @@ function initModels(sequelize) {
 
 	return {
 		Channels,
-		Quotes,
+		Lore,
 		Tags,
 		LoreTags,
 		Transactions,

@@ -1,23 +1,21 @@
-const getQuoteById = require('../lib/quotes/getQuoteById');
-const getQuoteByTag = require('../lib/quotes/getQuoteByTag');
-const getRandomQuote = require('../lib/quotes/getRandomQuote');
+const getLoreById = require('../lib/lore/getLoreById');
+const getLoreByTagName = require('../lib/lore/getLoreByTagName');
+const getRandomLore = require('../lib/lore/getRandomLore');
 
-const getQuote = async (filter = '') => {
+const getLore = async (filter = '') => {
 	const parsedNumber = parseInt(filter);
 
-	let quote = null;
+	let lore = null;
 	if (filter && !isNaN(parsedNumber)) {
-		// Get quote by id
-		quote = getQuoteById(parsedNumber);
+		lore = await getLoreById(parsedNumber);
 	}
 	else if (filter && isNaN(parsedNumber)) {
-		// Get quote by tag
-		quote = getQuoteByTag(filter);
+		lore = await getLoreByTagName(filter);
 	}
 	else {
-		quote = getRandomQuote();
+		lore = await getRandomLore();
 	}
-	return quote;
+	return lore;
 };
 
 module.exports = {
@@ -26,13 +24,16 @@ module.exports = {
 		// Acknowledge command request
 		await ack();
 
-		const quote = await getQuote(command.text);
-		if (quote === null) {
-			await say('No quote found :feelsdankman:');
+		const lore = await getLore(command.text);
+		if (lore === null) {
+			await say('No lore found :feelsdankman:');
 		}
 		else {
-			const { lore_url, lore_id } = quote;
+			const { lore_url, lore_id, tags } = lore;
 			await say(`*#${lore_id}* ${decodeURIComponent(lore_url)}`);
+			if (tags.length) {
+				await say(`Tags: ${tags.join(', ')}`);
+			}
 		}
 	},
 };
