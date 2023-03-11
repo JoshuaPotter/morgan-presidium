@@ -1,28 +1,30 @@
-const fs = require('fs');
+const { readdirSync } = require('fs');
 const { App } = require('@slack/bolt');
-const { slack_bot_token, slack_signing_secret, slack_app_token } = require('./config.json');
 
-// Initializes your app with your bot token and signing secret
+// Load environment variables.
+require('dotenv').config();
+
+// Initializes the app with a bot token and signing secret
 const app = new App({
-	token: slack_bot_token,
-	signingSecret: slack_signing_secret,
-	socketMode: true,
-	appToken: slack_app_token,
+	token: process.env.SLACK_BOT_TOKEN,
+	signingSecret: process.env.SLACK_SIGNING_SECRET,
 	port: process.env.PORT || 3000,
 });
 
 // Initialize event listeners
-const eventFiles = fs.readdir('./events').filter(file => file.endsWith('.js'));
+const eventFiles = readdirSync('./events').filter(file => file.endsWith('.js'));
+console.log('[Events] Loading...', eventFiles);
 for (const file of eventFiles) {
 	const event = require(`./events/${file}`);
 	app.event(event.name, (...args) => event.execute(...args));
 }
 
 // Initialize command listeners
-const commandFiles = fs.readdir('./commands').filter(file => file.endsWith('.js'));
+const commandFiles = readdirSync('./commands').filter(file => file.endsWith('.js'));
+console.log('[Commands] Loading...', commandFiles);
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
-	app.command(command.name, (...args) => command.execute(...args));
+	app.command(`/${command.name}`, (...args) => command.execute(...args));
 }
 
 app.error((error) => {
@@ -31,8 +33,9 @@ app.error((error) => {
 });
 
 (async () => {
-	// Start your app
+	// Start the app
 	await app.start(process.env.PORT || 3000);
 
-	console.log('⚡️ Bolt app is running!');
+	console.log('🚀 Morgan is running');
+	console.log('- Version: Citadel');
 })();

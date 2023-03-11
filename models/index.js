@@ -7,21 +7,21 @@ const _transactions = require('./transactions');
 const _users = require('./users');
 
 function initModels(sequelize) {
-	const channel = _channel(sequelize, DataTypes);
-	const lore = _lore(sequelize, DataTypes);
-	const tags = _tags(sequelize, DataTypes);
-	const tags_lore = _tags_lore(sequelize, DataTypes);
-	const transactions = _transactions(sequelize, DataTypes);
-	const users = _users(sequelize, DataTypes);
+	const Channels = _channel(sequelize, DataTypes);
+	const Quotes = _lore(sequelize, DataTypes);
+	const Tags = _tags(sequelize, DataTypes);
+	const LoreTags = _tags_lore(sequelize, DataTypes);
+	const Transactions = _transactions(sequelize, DataTypes);
+	const Users = _users(sequelize, DataTypes);
 
 
 	return {
-		channel,
-		lore,
-		tags,
-		tags_lore,
-		transactions,
-		users,
+		Channels,
+		Quotes,
+		Tags,
+		LoreTags,
+		Transactions,
+		Users,
 	};
 }
 module.exports = initModels;

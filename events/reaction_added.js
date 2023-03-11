@@ -3,7 +3,7 @@ module.exports = {
 	async execute({ event, client }) {
 		try {
 			await client.chat.postMessage({
-				channel: event.channel,
+				channel: event.item.channel,
 				text: 'Reaction added',
 			});
 		}

@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ."
+    "dev": "node .",
+    "start": "NODE_ENV=production node ."
   },
   "author": "Joshua Potter",
   "license": "ISC",
   "dependencies": {
     "@slack/bolt": "^3.8.1",
+    "dotenv": "^16.0.3",
+    "mysql2": "^3.2.0",
     "sequelize": "^6.28.0"
   },
   "devDependencies": {
