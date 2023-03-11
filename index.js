@@ -36,6 +36,8 @@ app.error((error) => {
 	// Start the app
 	await app.start(process.env.PORT || 3000);
 
-	console.log('🚀 Morgan is running');
-	console.log('- Version: Citadel');
+	console.log('==================================');
+	console.log('Program: Morgan');
+	console.log('Version: Citadel');
+	console.log('Status: Running');
 })();

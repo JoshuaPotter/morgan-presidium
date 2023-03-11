@@ -1,5 +1,24 @@
-const sequelize = require('../sequelize');
-const { Quotes } = require('../models')(sequelize);
+const getQuoteById = require('../lib/quotes/getQuoteById');
+const getQuoteByTag = require('../lib/quotes/getQuoteByTag');
+const getRandomQuote = require('../lib/quotes/getRandomQuote');
+
+const getQuote = async (filter = '') => {
+	const parsedNumber = parseInt(filter);
+
+	let quote = null;
+	if (filter && !isNaN(parsedNumber)) {
+		// Get quote by id
+		quote = getQuoteById(parsedNumber);
+	}
+	else if (filter && isNaN(parsedNumber)) {
+		// Get quote by tag
+		quote = getQuoteByTag(filter);
+	}
+	else {
+		quote = getRandomQuote();
+	}
+	return quote;
+};
 
 module.exports = {
 	name: 'quote',
@@ -7,13 +26,13 @@ module.exports = {
 		// Acknowledge command request
 		await ack();
 
-		const quote = await Quotes.findOne();
-		if(quote === null) {
-			await say('none found');
+		const quote = await getQuote(command.text);
+		if (quote === null) {
+			await say('No quote found :feelsdankman:');
 		}
 		else {
-			const { dataValues: { lore_url, lore_id } } = quote;
-			await say(`*${lore_id}* - ${decodeURIComponent(lore_url)}`);
+			const { lore_url, lore_id } = quote;
+			await say(`*#${lore_id}* ${decodeURIComponent(lore_url)}`);
 		}
 	},
 };

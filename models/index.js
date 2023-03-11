@@ -14,7 +14,6 @@ function initModels(sequelize) {
 	const Transactions = _transactions(sequelize, DataTypes);
 	const Users = _users(sequelize, DataTypes);
 
-
 	return {
 		Channels,
 		Quotes,
