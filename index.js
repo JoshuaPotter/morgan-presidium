@@ -1,9 +1,9 @@
 import { readdirSync } from 'fs';
 import bolt from '@slack/bolt';
+import * as dotenv from 'dotenv';
 
 // Load environment variables.
-import * as dotenv from 'dotenv'
-dotenv.config()
+dotenv.config();
 
 // Initializes the app with a bot token and signing secret
 const { App } = bolt;
@@ -39,7 +39,6 @@ app.error((error) => {
 	await app.start(process.env.PORT || 3000);
 
 	console.log('==================================');
-	console.log('Program: Morgan');
-	console.log('Version: Citadel');
-	console.log('Status: Running');
+	console.log('Program: Morgan (aka "Presidium")');
+	console.log('Running...');
 })();

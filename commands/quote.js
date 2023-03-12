@@ -1,4 +1,4 @@
-import getLore from "../lib/lore/getLore";
+import getLore from "../lib/lore/getLore.js";
 
 // Command name
 export const name = "quote";
