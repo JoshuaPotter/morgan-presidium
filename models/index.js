@@ -1,12 +1,12 @@
-const DataTypes = require('sequelize').DataTypes;
-const _channel = require('./channel');
-const _lore = require('./lore');
-const _tags = require('./tags');
-const _tags_lore = require('./tags_lore');
-const _transactions = require('./transactions');
-const _users = require('./users');
+import { DataTypes } from 'sequelize';
+import _channel from './channel.js';
+import _lore from './lore.js';
+import _tags from './tags.js';
+import _tags_lore from './tags_lore.js';
+import _transactions from './transactions.js';
+import _users from './users.js';
 
-function initModels(sequelize) {
+export default function initModels(sequelize) {
 	const Channels = _channel(sequelize, DataTypes);
 	const Lore = _lore(sequelize, DataTypes);
 	const Tags = _tags(sequelize, DataTypes);
@@ -23,6 +23,3 @@ function initModels(sequelize) {
 		Users,
 	};
 }
-module.exports = initModels;
-module.exports.initModels = initModels;
-module.exports.default = initModels;

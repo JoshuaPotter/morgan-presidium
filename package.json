@@ -1,6 +1,7 @@
 {
   "name": "morgan-bolt",
   "version": "1.0.0",
+  "type": "module",
   "description": "Slack assistant",
   "main": "index.js",
   "scripts": {
@@ -20,6 +21,8 @@
   "devDependencies": {
     "@types/node": "^18.15.0",
     "eslint": "^8.3.0",
+    "eslint-plugin-import": "^2.27.5",
+    "prettier": "2.8.4",
     "sequelize-auto": "^0.8.8"
   }
 }

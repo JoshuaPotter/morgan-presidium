@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+import Sequelize from 'sequelize';
 
 const { DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD } = process.env;
 
@@ -8,4 +8,4 @@ const sequelize = new Sequelize(DB_DATABASE, DB_USERNAME, DB_PASSWORD, {
 	dialect: 'mysql',
 });
 
-module.exports = sequelize;
+export default sequelize;

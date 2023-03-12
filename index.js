@@ -1,10 +1,12 @@
-const { readdirSync } = require('fs');
-const { App } = require('@slack/bolt');
+import { readdirSync } from 'fs';
+import bolt from '@slack/bolt';
 
 // Load environment variables.
-require('dotenv').config();
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 // Initializes the app with a bot token and signing secret
+const { App } = bolt;
 const app = new App({
 	token: process.env.SLACK_BOT_TOKEN,
 	signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -15,7 +17,7 @@ const app = new App({
 const eventFiles = readdirSync('./events').filter(file => file.endsWith('.js'));
 console.log('[Events] Loading...', eventFiles);
 for (const file of eventFiles) {
-	const event = require(`./events/${file}`);
+	const event = await import(`./events/${file}`);
 	app.event(event.name, (...args) => event.execute(...args));
 }
 
@@ -23,7 +25,7 @@ for (const file of eventFiles) {
 const commandFiles = readdirSync('./commands').filter(file => file.endsWith('.js'));
 console.log('[Commands] Loading...', commandFiles);
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
+	const command = await import(`./commands/${file}`);
 	app.command(`/${command.name}`, (...args) => command.execute(...args));
 }
 

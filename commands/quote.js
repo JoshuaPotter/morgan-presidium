@@ -1,6 +1,6 @@
-const getLoreById = require('../lib/lore/getLoreById');
-const getLoreByTagName = require('../lib/lore/getLoreByTagName');
-const getRandomLore = require('../lib/lore/getRandomLore');
+import getLoreById from '../lib/lore/getLoreById.js';
+import getLoreByTagName from '../lib/lore/getLoreByTagName.js';
+import getRandomLore from '../lib/lore/getRandomLore.js';
 
 const getLore = async (filter = '') => {
 	const parsedNumber = parseInt(filter);
@@ -18,22 +18,23 @@ const getLore = async (filter = '') => {
 	return lore;
 };
 
-module.exports = {
-	name: 'quote',
-	async execute({ command, ack, say }) {
-		// Acknowledge command request
-		await ack();
+// Command name
+export const name = "quote";
 
-		const lore = await getLore(command.text);
-		if (lore === null) {
-			await say('No lore found :feelsdankman:');
+// Command action
+export async function execute({ command, ack, say }) {
+	// Acknowledge command request
+	await ack();
+
+	const lore = await getLore(command.text);
+	if (lore === null) {
+		await say('No lore found :feelsdankman:');
+	}
+	else {
+		const { lore_url, lore_id, tags } = lore;
+		await say(`*#${lore_id}* ${decodeURIComponent(lore_url)}`);
+		if (tags.length) {
+			await say(`Tags: ${tags.join(', ')}`);
 		}
-		else {
-			const { lore_url, lore_id, tags } = lore;
-			await say(`*#${lore_id}* ${decodeURIComponent(lore_url)}`);
-			if (tags.length) {
-				await say(`Tags: ${tags.join(', ')}`);
-			}
-		}
-	},
+	}
 };
