@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const { DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD } = process.env;
 
-// Initialize database
+// Initialize database connection within Sequelize
 const sequelize = new Sequelize(DB_DATABASE, DB_USERNAME, DB_PASSWORD, {
 	host: DB_HOST,
 	dialect: 'mysql',
@@ -24,10 +24,13 @@ catch (error) {
 	console.error('Unable to connect to the database:', error);
 }
 
+// Load models into the Sequelize instance
 initModels(sequelize);
 
+// Sync the Sequelize instance with the database. 
+// Optionally, use (with caution) the -f parameter to drop all existing tables and create new tables from models.
+// e.g.  `node db-init.js -f`
 const force = process.argv.includes('--force') || process.argv.includes('-f');
-
 sequelize.sync({ force }).then(async () => {
 	console.log('Database synced');
 	sequelize.close();
