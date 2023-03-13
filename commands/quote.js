@@ -1,47 +1,57 @@
+import fetch from "node-fetch";
 import getLore from "../lib/lore/getLore.js";
+
+function formatBlocks (name, votes, tags = []) {
+	const blocks =  [
+		{
+			type: "context",
+			elements: [
+			{
+				type: "mrkdwn",
+				text: `*Votes*: ${votes}`,
+			},
+			{
+				type: "mrkdwn",
+				text: `*Submitted By*: ${name}`,
+			},
+			],
+		}
+	];
+	if (tags.length) {
+		blocks[0].elements.push({
+			type: "mrkdwn",
+			text: `*Tags*: \`${tags.join("` `")}\``,
+		});
+	}
+
+	return blocks;
+}
 
 // Command name
 export const name = "quote";
 
 // Command action
-export async function execute({ client, command, ack, say }) {
+export async function execute ({ client, command, ack, say }) {
 	// Acknowledge command request
-	await ack();
+	await ack({"response_type": "in_channel"});
 
 	try {
 		const lore = await getLore(command.text);
 		if (lore !== null) {
-			const { lore_url, lore_id, tags, votes, submitted_by } = lore;
+			const { lore_url, lore_id, submitted_by, tags, votes } = lore;
 
-			// Reply wth quote
+			// Reply with quote
 			const message = await say(`*#${lore_id}* ${decodeURIComponent(lore_url)}`);
 
-			// Add thread reply with quote details
+			// Get display name from user id
 			const result = await client.users.info({
 				user: submitted_by
 			});
-			const blocks =  [
-				{
-					type: "context",
-					elements: [
-					{
-						type: "mrkdwn",
-						text: `Votes: ${votes}`,
-					},
-					{
-						type: "mrkdwn",
-						text: `Submitted By: ${result.ok ? result.user.name : submitted_by}`,
-					},
-					],
-				}
-			];
-			if (tags.length) {
-				blocks[0].elements.push({
-					type: "mrkdwn",
-					text: `Tags: \`${tags.join("` `")}\``,
-				});
-			}
-			await say({ text: 'Quote details', blocks, thread_ts: message.ts });
+			const name = result.ok ? result.user.display_name : submitted_by;
+			
+			// Add thread reply with quote details
+			const blocks = formatBlocks(name, votes, tags);
+			await say({ blocks, text: 'Quote details', thread_ts: message.ts });
 
 			// Add voting reactions
 			await client.reactions.add({

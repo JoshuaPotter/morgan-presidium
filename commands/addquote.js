@@ -6,7 +6,7 @@ export const name = "addquote";
 // Command action
 export async function execute({ command, ack, say }) {
 	// Acknowledge command request
-	await ack();
+	await ack({"response_type": "in_channel"});
     
     if(isSlackLink(command.text)) {
         try {
