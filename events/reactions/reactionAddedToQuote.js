@@ -1,4 +1,4 @@
-import handleQuoteReaction from "../../lib/reactions/handleQuoteReaction.js";
+import handleLoreReaction from "../../lib/lore/handleLoreReaction.js";
 
 const appUserId = "U04T2FT1LHZ";
 
@@ -27,7 +27,7 @@ export async function execute({ event, client }) {
 			});
 			if(response.ok) {
 				const { text: quote } = response.messages[0];
-				handleQuoteReaction(reaction, quote);
+				handleLoreReaction(reaction, quote);
 			}
 		}
 		catch (error) {
