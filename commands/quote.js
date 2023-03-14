@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import getLore from "../lib/lore/getLore.js";
 
 function formatBlocks (name, votes, tags = []) {
@@ -47,7 +46,7 @@ export async function execute ({ client, command, ack, say }) {
 			const result = await client.users.info({
 				user: submitted_by
 			});
-			const name = result.ok ? result.user.display_name : submitted_by;
+			const name = result.ok ? result.user.profile.display_name : submitted_by;
 			
 			// Add thread reply with quote details
 			const blocks = formatBlocks(name, votes, tags);

@@ -2,6 +2,9 @@ import { readdirSync } from 'fs';
 import bolt from '@slack/bolt';
 import * as dotenv from 'dotenv';
 
+console.log('Morgan v4 (aka "Presidium")');
+console.log('[Status] Initializing');
+
 // Load environment variables.
 dotenv.config();
 
@@ -15,7 +18,7 @@ const app = new App({
 
 // Initialize event listeners
 const eventFiles = readdirSync('./events').filter(file => file.endsWith('.js'));
-console.log('[Events] Loading...', eventFiles);
+console.log('[Status] Loading events', eventFiles);
 for (const file of eventFiles) {
 	const event = await import(`./events/${file}`);
 	app.event(event.name, (...args) => event.execute(...args));
@@ -23,7 +26,7 @@ for (const file of eventFiles) {
 
 // Initialize command listeners
 const commandFiles = readdirSync('./commands').filter(file => file.endsWith('.js'));
-console.log('[Commands] Loading...', commandFiles);
+console.log('[Status] Loading commands', commandFiles);
 for (const file of commandFiles) {
 	const command = await import(`./commands/${file}`);
 	app.command(`/${command.name}`, (...args) => command.execute(...args));
@@ -38,7 +41,5 @@ app.error((error) => {
 	// Start the app
 	await app.start(process.env.PORT || 3000);
 
-	console.log('==================================');
-	console.log('Program: Morgan (aka "Presidium")');
-	console.log('Running...');
+	console.log('[Status] Running...');
 })();
