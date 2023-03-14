@@ -1,4 +1,4 @@
-import deleteLore from "../lib/lore/deleteLore.js";
+import deleteLore from "../../lib/lore/deleteLore.js";
 
 export const name = "deletequote";
 
@@ -13,19 +13,21 @@ export async function execute({ command, ack, say }) {
 
             if (lore) {
                 const possibleResponses = [
-                    `Goodnight sweet prince, *#${id}* is deleted`,
-                    `RIP *#${id}*, the deed is done`,
-                    `Begone *#${id}*`,
+                    `Goodnight sweet prince *#${id}*`,
+                    `RIP *#${id}* :pepegrin:`,
+                    `Never seen a *#${id}* and I never fuckin' will`,
                     `I deleted *#${id}*`,
                 ];
                 const index = Math.floor(Math.random() * possibleResponses.length);
-                return await say(possibleResponses[index])
+                return await say(possibleResponses[index]);
+            } else {
+                return await say("I couldn't delete the lore (database error) :pepehands:");
             }
         } 
         catch (error) {
             console.log(error);
         }
+    } else {
+        return await say('Must be a quote ID (number) :feelsdankman:');
     }
-
-    return await say("I couldn't delete the lore :pepehands:");
 };

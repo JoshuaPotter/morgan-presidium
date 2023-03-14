@@ -1,20 +1,42 @@
-import getLore from "../lib/lore/getLore.js";
+import getLore from "../../lib/lore/getLore.js";
 
-function formatBlocks (name, votes, tags = []) {
+function formatBlocks (id, name, votes, tags = []) {
 	const blocks =  [
 		{
 			type: "context",
 			elements: [
-			{
-				type: "mrkdwn",
-				text: `*Votes*: ${votes}`,
-			},
-			{
-				type: "mrkdwn",
-				text: `*Submitted By*: ${name}`,
-			},
+				{
+					type: "mrkdwn",
+					text: `*Submitted*: ${name}`,
+				},
 			],
-		}
+		},
+		{
+		  type: "actions",
+		  elements: [
+			{
+			  type: "button",
+			  text: {
+				type: "plain_text",
+				text: "Add Tags",
+				emoji: true,
+			  },
+			  action_id: "addTags",
+			  value: `${id}`,
+			},
+			{
+			  type: "button",
+			  text: {
+				type: "plain_text",
+				text: "Delete Quote",
+				emoji: true,
+			  },
+			  action_id: "deleteQuote",
+			  value: `${id}`,
+			  style: "danger",
+			},
+		  ],
+		},
 	];
 	if (tags.length) {
 		blocks[0].elements.push({
@@ -22,6 +44,10 @@ function formatBlocks (name, votes, tags = []) {
 			text: `*Tags*: \`${tags.join("` `")}\``,
 		});
 	}
+	blocks[0].elements.push({
+		type: "mrkdwn",
+		text: `*Votes*: ${votes}`,
+	})
 
 	return blocks;
 }
@@ -49,7 +75,7 @@ export async function execute ({ client, command, ack, say }) {
 			const name = result.ok ? result.user.profile.display_name : submitted_by;
 			
 			// Add thread reply with quote details
-			const blocks = formatBlocks(name, votes, tags);
+			const blocks = formatBlocks(lore_id, name, votes, tags);
 			await say({ blocks, text: 'Quote details', thread_ts: message.ts });
 
 			// Add voting reactions

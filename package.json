@@ -15,6 +15,7 @@
   "dependencies": {
     "@slack/bolt": "^3.8.1",
     "dotenv": "^16.0.3",
+    "glob": "^9.2.1",
     "mysql2": "^3.2.0",
     "sequelize": "^6.28.0"
   },

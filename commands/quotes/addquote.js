@@ -1,5 +1,5 @@
-import addLore from "../lib/lore/addLore.js";
-import isSlackLink from "../lib/misc/isSlackLink.js";
+import addLore from "../../lib/lore/addLore.js";
+import isSlackLink from "../../lib/misc/isSlackLink.js";
 
 export const name = "addquote";
 
@@ -18,18 +18,20 @@ export async function execute({ command, ack, say }) {
 
             if (lore !== null) {
                 const possibleResponses = [
-                    `I'm gonna add this as *#${lore.lore_id}*`,
-                    `Added to the LIST as *#${lore.lore_id}* :clap:`,
-                    `added *#${lore.lore_id}* :catjam:`,
+                    `I'm gonna add this as *#${lore.lore_id} :lebronjam:*`,
+                    `Added to the LIST as *#${lore.lore_id}* :vibepls:`,
+                    `added *#${lore.lore_id}* :deadass:`,
                 ];
                 const index = Math.floor(Math.random() * possibleResponses.length);
                 return await say(possibleResponses[index])
+            }else {
+                return await say("I couldn't add the lore (database error) :pepehands:");
             }
         } 
         catch (error) {
             console.log(error);
         }
+    } else {
+        return await say("I'm not sure what you just sent me, make sure you only send me slack message permalinks :feelsdankman:");
     }
-
-    return await say("I couldn't save the lore :pepehands:");
 };
