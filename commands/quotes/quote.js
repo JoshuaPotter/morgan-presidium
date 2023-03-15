@@ -1,64 +1,64 @@
-import getLore from "../../lib/lore/getLore.js";
+import getLore from '../../lib/lore/getLore.js';
 
-function formatBlocks (id, name, votes, tags = []) {
-	const blocks =  [
+function formatBlocks(id, name, votes, tags = []) {
+	const blocks = [
 		{
-			type: "context",
+			type: 'context',
 			elements: [
 				{
-					type: "mrkdwn",
+					type: 'mrkdwn',
 					text: `*Submitted*: ${name}`,
 				},
 			],
 		},
 		{
-		  type: "actions",
-		  elements: [
-			{
-			  type: "button",
-			  text: {
-				type: "plain_text",
-				text: "Add Tags",
-				emoji: true,
-			  },
-			  action_id: "addTags",
-			  value: `${id}`,
-			},
-			{
-			  type: "button",
-			  text: {
-				type: "plain_text",
-				text: "Delete Quote",
-				emoji: true,
-			  },
-			  action_id: "deleteQuote",
-			  value: `${id}`,
-			  style: "danger",
-			},
-		  ],
+			type: 'actions',
+			elements: [
+				{
+					type: 'button',
+					text: {
+						type: 'plain_text',
+						text: 'Add Tags',
+						emoji: true,
+					},
+					action_id: 'addTags',
+					value: `${id}`,
+				},
+				{
+					type: 'button',
+					text: {
+						type: 'plain_text',
+						text: 'Delete Quote',
+						emoji: true,
+					},
+					action_id: 'deleteQuote',
+					value: `${id}`,
+					style: 'danger',
+				},
+			],
 		},
 	];
 	if (tags.length) {
 		blocks[0].elements.push({
-			type: "mrkdwn",
-			text: `*Tags*: \`${tags.join("` `")}\``,
+			type: 'mrkdwn',
+			text: `*Tags*: \`${tags.join('` `')}\``,
 		});
 	}
 	blocks[0].elements.push({
-		type: "mrkdwn",
+		type: 'mrkdwn',
 		text: `*Votes*: ${votes}`,
-	})
+	});
 
 	return blocks;
 }
 
 // Command name
-export const name = "quote";
+export const name = 'quote';
 
 // Command action
-export async function execute ({ client, command, ack, say }) {
+export async function execute({ client, command, ack, say }) {
 	// Acknowledge command request
-	await ack({"response_type": "in_channel"});
+	await ack({ 'response_type': 'in_channel' });
 
 	try {
 		const lore = await getLore(command.text);
@@ -70,32 +70,32 @@ export async function execute ({ client, command, ack, say }) {
 
 			// Get display name from user id
 			const result = await client.users.info({
-				user: submitted_by
+				user: submitted_by,
 			});
-			const name = result.ok ? result.user.profile.display_name : submitted_by;
-			
+			const displayName = result.ok ? result.user.profile.display_name : submitted_by;
+
 			// Add thread reply with quote details
-			const blocks = formatBlocks(lore_id, name, votes, tags);
+			const blocks = formatBlocks(lore_id, displayName, votes, tags);
 			await say({ blocks, text: 'Quote details', thread_ts: message.ts });
 
 			// Add voting reactions
 			await client.reactions.add({
-				channel: message.channel, 
-				name: '+1', 
-				timestamp: message.ts
+				channel: message.channel,
+				name: '+1',
+				timestamp: message.ts,
 			});
 			await client.reactions.add({
-				channel: message.channel, 
-				name: '-1', 
-				timestamp: message.ts
+				channel: message.channel,
+				name: '-1',
+				timestamp: message.ts,
 			});
 
 			return true;
 		}
-	} 
+	}
 	catch (error) {
 		console.log(error);
 	}
 
 	return await say('No lore found :feelsdankman:');
-};
+}

@@ -1,32 +1,33 @@
-import addTags from "../../lib/tags/addTags.js";
+import addTags from '../../lib/tags/addTags.js';
 
-export const name = "addTags";
+export const name = 'addTags';
 
 export async function execute({ ack, body, client, view }) {
-    await ack();
-    
-    // Handle add tags modal view submission
-    const user = body.user.id;
-    const { private_metadata, state: { values: { addTagsBlock: { addTagsInput } } } } = view;
-    const { channel, lore_id } = JSON.parse(private_metadata);
+	await ack();
 
-    const tags = addTagsInput.value.split(',').map(tag => tag.trim());
-    const addedTags = await addTags(lore_id, tags);
+	// Handle add tags modal view submission
+	const user = body.user.id;
+	const { private_metadata, state: { values: { addTagsBlock: { addTagsInput } } } } = view;
+	const { channel, lore_id } = JSON.parse(private_metadata);
 
-    let msg = '';
-    if(addedTags) {
-        msg = `Added tag${tags.length === 1 ? '' : 's'} *${tags.join('*, *')}* to #*${lore_id}* :yep:`;
-    } else {
-        msg = `I couldn't add the tag${tags.length === 1 ? '' : 's'} *${tags.join('*, *')}* to #*${lore_id}* :pepehands:`
-    }
+	const tags = addTagsInput.value.split(',').map(tag => tag.trim());
+	const addedTags = await addTags(lore_id, tags);
 
-    try {
-        await client.chat.postMessage({
-            channel: channel,
-            text: `<@${user}> ${msg}`
-        });
-    } 
-    catch (error) {
-        console.error(error);
-    }
+	let msg = '';
+	if (addedTags) {
+		msg = `Added tag${tags.length === 1 ? '' : 's'} *${tags.join('*, *')}* to #*${lore_id}* :yep:`;
+	}
+	else {
+		msg = `I couldn't add the tag${tags.length === 1 ? '' : 's'} *${tags.join('*, *')}* to #*${lore_id}* :pepehands:`;
+	}
+
+	try {
+		await client.chat.postMessage({
+			channel: channel,
+			text: `<@${user}> ${msg}`,
+		});
+	}
+	catch (error) {
+		console.error(error);
+	}
 }
