@@ -3,7 +3,7 @@ export const name = "deleteQuote";
 export async function execute({ ack, body, client }) {
     await ack();
 
-    // Open model on delete quote button click
+    // Open modal on delete quote button click
     const channel = body.channel.id;
     const { value: lore_id } = body.actions[0];
     try {

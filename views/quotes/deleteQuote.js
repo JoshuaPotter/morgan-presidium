@@ -1,10 +1,11 @@
-export const name = "deleteQuote";
 import deleteLore from  '../../lib/lore/deleteLore.js';
+
+export const name = "deleteQuote";
 
 export async function execute({ ack, body, client, view }) {
     await ack();
     
-    // Handle delete quote model view submission
+    // Handle delete quote modal view submission
     const user = body.user.id;
     const { private_metadata } = view;
     const { channel, lore_id } = JSON.parse(private_metadata);
