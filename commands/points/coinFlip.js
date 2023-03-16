@@ -1,6 +1,7 @@
 import sequelize from '../../sequelize.js';
 import initModels from '../../models/index.js';
-import givePoints from '../../lib/points/givePoints.js';
+import incrementPoints from '../../lib/points/incrementPoints.js';
+import decrementPoints from '../../lib/points/decerementPoints.js';
 const { Users } = initModels(sequelize);
 
 export const name = 'coinflip';
@@ -11,11 +12,11 @@ export async function execute({ command, ack, say }) {
 	const pointsToBet = parseInt(command.text);
 
 	if (isNaN(pointsToBet)) {
-		return await say('You can only bet using a numeric value :feelsdankman:');
+		return await say(`<@${command.user_id}> You can only bet using a numeric value :feelsdankman:`);
 	}
 
 	if (pointsToBet <= 0) {
-		return await say('You can only bet using a numeric value greater than zero :feelsdankman:');
+		return await say(`<@${command.user_id}> You can only bet using a numeric value greater than zero :feelsdankman:`);
 	}
 
 	const slack_id = command.user_id;
@@ -26,7 +27,7 @@ export async function execute({ command, ack, say }) {
 	});
 	const userPoints = parseInt(user.points);
 	if (userPoints < pointsToBet) {
-		return await say("You don't have enough tendies.");
+		return await say(`<@${command.user_id}> You don't have enough tendies.`);
 	}
 
 	const random = Math.random();
@@ -34,11 +35,11 @@ export async function execute({ command, ack, say }) {
 	let msg = '';
 	if (random < 0.5) {
 		msg = `:chart_with_downwards_trend: <@${slack_id}> lost ${pointsToBet}... They now have ${userPoints - pointsToBet} $TNDS.`;
-		await givePoints(slack_id, -pointsToBet);
+		await decrementPoints(slack_id, pointsToBet);
 	}
 	else {
 		msg = `:chart_with_upwards_trend: <@${slack_id}> won ${pointsToBet}! They now have ${userPoints + pointsToBet} $TNDS.`;
-		await givePoints(slack_id, pointsToBet);
+		await incrementPoints(slack_id, pointsToBet);
 	}
 
 	return await say(msg);

@@ -1,4 +1,4 @@
-import givePoints from '../../lib/points/givePoints.js';
+import incrementPoints from '../../lib/points/incrementPoints.js';
 
 const appUserId = 'U04T2FT1LHZ';
 
@@ -17,7 +17,7 @@ export async function execute({ event }) {
 	// If the item the user reacting to isn't from the bot, and the user reacting isn't the bot, and the item the user reacting to wasn't posted themselves
 	if (itemUserId !== appUserId && userId !== appUserId && itemUserId !== userId) {
 		try {
-			await givePoints(itemUserId, 10);
+			await incrementPoints(itemUserId, 10);
 		}
 		catch (error) {
 			console.error(error);
