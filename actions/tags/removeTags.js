@@ -14,8 +14,8 @@ export async function execute({ ack, body, client }) {
 			view: {
 				type: 'modal',
 				// View identifier
-				private_metadata: JSON.stringify({ channel, lore_id }),
 				callback_id: 'removeTags',
+				private_metadata: JSON.stringify({ channel, lore_id }),
 				title: {
 					type: 'plain_text',
 					text: `Remove tags from #${lore_id}`,
