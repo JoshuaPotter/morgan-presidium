@@ -11,7 +11,7 @@ export async function execute({ ack, say }) {
 
 	const tags = await getAllTags();
 	const tagKeys = Object.keys(tags);
-	tagKeys.forEach(async key => {
+	for (const key of tagKeys) {
 		await say({ text: `*Letter:* ${key}\n\`${tags[key].join('` `')}\``, thread_ts: message.ts });
-	});
+	}
 }

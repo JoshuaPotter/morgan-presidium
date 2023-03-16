@@ -28,6 +28,16 @@ function formatBlocks(id, name, votes, tags = []) {
 					type: 'button',
 					text: {
 						type: 'plain_text',
+						text: 'Remove Tags',
+						emoji: true,
+					},
+					action_id: 'removeTags',
+					value: `${id}`,
+				},
+				{
+					type: 'button',
+					text: {
+						type: 'plain_text',
 						text: 'Delete Quote',
 						emoji: true,
 					},

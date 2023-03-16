@@ -1,9 +1,9 @@
-export const name = 'addTags';
+export const name = 'removeTags';
 
 export async function execute({ ack, body, client }) {
 	await ack();
 
-	// Open modal on add tags button click
+	// Open modal on remove tags button click
 	const channel = body.channel.id;
 	const { value: lore_id } = body.actions[0];
 	try {
@@ -15,26 +15,26 @@ export async function execute({ ack, body, client }) {
 				type: 'modal',
 				// View identifier
 				private_metadata: JSON.stringify({ channel, lore_id }),
-				callback_id: 'addTags',
+				callback_id: 'removeTags',
 				title: {
 					type: 'plain_text',
-					text: `Add tags to #${lore_id}`,
+					text: `Remove tags from #${lore_id}`,
 				},
 				blocks: [
 					{
 						type: 'section',
 						text: {
 							type: 'plain_text',
-							text: 'Add one or more tags by separating with a comma (ex. first tag, second tag, third tag).',
+							text: 'Remove one or more tags by separating with a comma (ex. first tag, second tag, third tag).',
 							emoji: true,
 						},
 					},
 					{
 						type: 'input',
-						block_id: 'addTagsBlock',
+						block_id: 'removeTagsBlock',
 						element: {
 							type: 'plain_text_input',
-							action_id: 'addTagsInput',
+							action_id: 'removeTagsInput',
 							focus_on_load: true,
 							placeholder: {
 								type: 'plain_text',
@@ -55,7 +55,7 @@ export async function execute({ ack, body, client }) {
 				},
 				submit: {
 					type: 'plain_text',
-					text: 'Add',
+					text: 'Remove',
 				},
 			},
 		});
