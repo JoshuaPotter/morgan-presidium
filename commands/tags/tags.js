@@ -12,6 +12,12 @@ export async function execute({ ack, say }) {
 	const tags = await getAllTags();
 	const tagKeys = Object.keys(tags);
 	for (const key of tagKeys) {
-		await say({ text: `*Letter:* ${key}\n\`${tags[key].join('` `')}\``, thread_ts: message.ts });
+		// A crude way of throttling the API calls to slack to attempt rate limit reduction.
+		await new Promise(resolve => {
+			return setTimeout(async () => {
+				await say({ text: `*Letter:* ${key}\n\`${tags[key].join('` `')}\``, thread_ts: message.ts });
+				resolve();
+			}, 100);
+		});
 	}
 }
