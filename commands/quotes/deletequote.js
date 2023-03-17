@@ -6,7 +6,7 @@ export const name = 'deletequote';
 export async function execute({ command, ack, say }) {
 	// Acknowledge command request
 	await ack({ 'response_type': 'in_channel' });
-	
+
 	const id = parseInt(command.text);
 	if (!isNaN(id)) {
 		try {

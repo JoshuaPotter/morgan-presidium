@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node .",
     "dev:expose": "loophole http 3000 --hostname morgan-presidium",
-    "start": "NODE_ENV=production node ."
+    "start": "NODE_ENV=production node .",
+    "eslint": "npx eslint --ext .js ."
   },
   "author": "Joshua Potter",
   "license": "ISC",

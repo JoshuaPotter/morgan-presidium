@@ -5,8 +5,9 @@
  * Otherwise, do not use the force flag.
  */
 import Sequelize from 'sequelize';
-import initModels from './models';
-require('dotenv').config();
+import initModels from './models/index.js';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const { DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD } = process.env;
 
@@ -27,7 +28,7 @@ catch (error) {
 // Load models into the Sequelize instance
 initModels(sequelize);
 
-// Sync the Sequelize instance with the database. 
+// Sync the Sequelize instance with the database.
 // Optionally, use (with caution) the -f parameter to drop all existing tables and create new tables from models.
 // e.g.  `node db-init.js -f`
 const force = process.argv.includes('--force') || process.argv.includes('-f');

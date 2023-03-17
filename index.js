@@ -22,7 +22,7 @@ app.error((error) => {
 });
 
 (async () => {
-	
+
 	// Initialize action listeners
 	const actionFiles = await glob('./actions/**/*.js');
 	for (const file of actionFiles) {
@@ -30,7 +30,7 @@ app.error((error) => {
 		app.action(action.name, (...args) => action.execute(...args));
 	}
 	console.log('[Status] Actions loaded:', actionFiles);
-	
+
 	// Initialize command listeners
 	const commandFiles = await glob('./commands/**/*.js');
 	for (const file of commandFiles) {
@@ -38,7 +38,7 @@ app.error((error) => {
 		app.command(`/${command.name}`, (...args) => command.execute(...args));
 	}
 	console.log('[Status] Commands loaded:', commandFiles);
-	
+
 	// Initialize event listeners
 	const eventFiles = await glob('./events/**/*.js');
 	for (const file of eventFiles) {
@@ -46,7 +46,7 @@ app.error((error) => {
 		app.event(event.name, (...args) => event.execute(...args));
 	}
 	console.log('[Status] Events loaded:', eventFiles);
-	
+
 	// Initialize views listeners
 	const viewFiles = await glob('./views/**/*.js');
 	for (const file of viewFiles) {

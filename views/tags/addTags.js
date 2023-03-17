@@ -8,7 +8,7 @@ export async function execute({ ack, body, client, view }) {
 	// Handle add tags modal view submission
 	const user = body.user.id;
 	const { private_metadata, state } = view;
-	const addTagsInput = state['values']['addTagsBlock']['addTagsInput'];
+	const addTagsInput = state.values.addTagsBlock.addTagsInput;
 	const { channel, lore_id } = JSON.parse(private_metadata);
 
 	const tags = addTagsInput.value.split(',').map(tag => tag.trim());

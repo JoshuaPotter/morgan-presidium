@@ -8,7 +8,7 @@ export async function execute({ ack, body, client, view }) {
 	// Handle remove tags modal view submission
 	const user = body.user.id;
 	const { private_metadata, state } = view;
-	const removeTagsInput = state['values']['removeTagsBlock']['removeTagsInput'];
+	const removeTagsInput = state.values.removeTagsBlock.removeTagsInput;
 	const { channel, lore_id } = JSON.parse(private_metadata);
 
 	const tags = removeTagsInput.value.split(',').map(tag => tag.trim());
