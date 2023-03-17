@@ -83,7 +83,7 @@ export async function execute({ ack, client, command, say }) {
 					elements: [
 						{
 							type: 'mrkdwn',
-							text: '*Request:* Send $TNDS',
+							text: 'Send $TNDS',
 						},
 						{
 							type: 'mrkdwn',
@@ -145,5 +145,5 @@ export async function execute({ ack, client, command, say }) {
 		console.error(error);
 	}
 
-	return say(`Sent a request to <@${targetUser}> for *${amount} $TNDS*.`);
+	return say(`Sent a request to <@${targetUser}> for *${amount} $TNDS* :peepoleave:`);
 }

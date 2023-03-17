@@ -23,13 +23,13 @@ export async function execute({ ack, body, client }) {
 				channel: body.channel.id,
 				as_user: true,
 				ts: body.message.ts,
-				text: `You accepted <@${sendTo}>'s request for *${amount} $TNDS*.`,
+				text: `You accepted <@${sendTo}>'s request for *${amount} $TNDS* :peepohappy:`,
 				blocks: [
 					{
 						type: 'section',
 						text: {
 							type: 'mrkdwn',
-							text: `You accepted <@${sendTo}>'s request for *${amount} $TNDS*`,
+							text: `You accepted <@${sendTo}>'s request for *${amount} $TNDS* :peepohappy:`,
 						},
 					},
 				],
@@ -38,7 +38,7 @@ export async function execute({ ack, body, client }) {
 			// Send alert to recipient
 			await client.chat.postMessage({
 				channel: sendTo,
-				text: `<@${sendFrom}> accepted your $TNDS request, they deposited *${amount} $TNDS* into you account.`,
+				text: `:peepoarrive: <@${sendFrom}> accepted your $TNDS request, they deposited *${amount} $TNDS* into your account`,
 			});
 		}
 		catch (error) {

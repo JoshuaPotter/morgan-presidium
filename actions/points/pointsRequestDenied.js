@@ -18,13 +18,13 @@ export async function execute({ ack, body, client }) {
 				channel: body.channel.id,
 				as_user: true,
 				ts: body.message.ts,
-				text: `You denied <@${sendTo}>'s request for *${amount} $TNDS*.`,
+				text: `You denied <@${sendTo}>'s request for *${amount} $TNDS* :notlikethis:`,
 				blocks: [
 					{
 						type: 'section',
 						text: {
 							type: 'mrkdwn',
-							text: `You denied <@${sendTo}>'s request for *${amount} $TNDS*`,
+							text: `You denied <@${sendTo}>'s request for *${amount} $TNDS* :notlikethis:`,
 						},
 					},
 				],
@@ -33,7 +33,7 @@ export async function execute({ ack, body, client }) {
 			// Send alert to recipient
 			await client.chat.postMessage({
 				channel: sendTo,
-				text: `<@${sendFrom}> denied your request for *${amount} $TNDS*`,
+				text: `<@${sendFrom}> denied your request for *${amount} $TNDS* :notlikethis:`,
 			});
 		}
 		catch (error) {
