@@ -1,7 +1,7 @@
 import sequelize from '../../sequelize.js';
 import initModels from '../../models/index.js';
 import incrementPoints from '../../lib/points/incrementPoints.js';
-import { parse } from 'path';
+import decrementPoints from '../../lib/points/decerementPoints.js';
 const { Users } = initModels(sequelize);
 
 export const name = 'send';
@@ -9,14 +9,20 @@ export const name = 'send';
 export async function execute({ client, command, ack, say }) {
 	await ack({ 'response_type': 'in_channel' });
 
+	const slack_id = command.user_id;
+	const helpMsg = `<@${command.user_id}> To use this command, only send a tagged user and a number of tendies to send. Example: \`/send @username 10\``;
+
 	if (!command.text) {
-		return await say(`<@${command.user_id}> To use this command, only send a tagged user and a number of tendies to send. Example: \`/command @username 10\``);
+		return await say(helpMsg);
 	}
 
-
 	let recipient = '';
-	let pointsToSend = '';
+	let amount = '';
 	const tokens = command.text.split(' ');
+	if (tokens.length !== 2) {
+		return await say(helpMsg);
+	}
+
 	for (const token of tokens) {
 		const parsedToken = parseInt(token);
 		if (isNaN(parsedToken)) {
@@ -34,32 +40,38 @@ export async function execute({ client, command, ack, say }) {
 		}
 		else {
 			// Found points to send
-			pointsToSend = parseInt(parsedToken);
+			amount = parseInt(parsedToken);
 		}
 	}
 
 	if (!recipient) {
-		return await say(`<@${command.user_id}> Not a valid recipient :feelsdankman:`);
+		return await say(`<@${slack_id}> Not a valid recipient :feelsdankman:`);
 	}
 
-	if (!pointsToSend || isNaN(pointsToSend)) {
-		return await say(`<@${command.user_id}> You must include an amount of tendies to send :feelsdankman:`);
+	if (recipient === slack_id) {
+		return await say(`<@${slack_id}> You can't send tendies to yourself :feelsdankman:`);
 	}
 
-	if (pointsToSend <= 0) {
-		return await say(`<@${command.user_id}> You must send more than one tender :feelsdankman:`);
+	if (!amount || isNaN(amount)) {
+		return await say(`<@${slack_id}> You must include an amount of tendies to send :feelsdankman:`);
 	}
 
-	const slack_id = command.user_id;
+	if (amount <= 0) {
+		return await say(`<@${slack_id}> You must send more than one tender :feelsdankman:`);
+	}
+
 	const user = await Users.findOne({
 		where: {
 			slack_id,
 		},
 	});
 	const userPoints = parseInt(user.points);
-	if (userPoints < pointsToSend) {
-		return await say(`<@${command.user_id}> You don't have enough tendies to send.`);
+	if (userPoints < amount) {
+		return await say(`<@${slack_id}> You don't have enough tendies to send.`);
 	}
 
-	return await say(`<@${command.user_id}> sent ${pointsToSend} $TNDS to <@${recipient}>`);
+	await decrementPoints(slack_id, amount);
+	await incrementPoints(recipient, amount);
+
+	return await say(`<@${slack_id}> sent *${amount} $TNDS* to <@${recipient}>!`);
 }
