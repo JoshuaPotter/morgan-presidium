@@ -1,4 +1,5 @@
 import decrementPoints from '../../lib/points/decerementPoints.js';
+import getUserPoints from '../../lib/points/getUserPoints.js';
 import incrementPoints from '../../lib/points/incrementPoints.js';
 
 export const name = 'pointsRequestAccepted';
@@ -14,6 +15,16 @@ export async function execute({ ack, body, client }) {
 	const { event_payload, event_type } = body.message.metadata;
 	if (event_type === 'pointsRequest') {
 		const { amount, sendTo, sendFrom } = event_payload;
+
+		// Check if there is an available balance before accepting
+		const availablePoints = await getUserPoints(sendFrom);
+		if (availablePoints < amount) {
+			return await client.chat.postMessage({
+				channel: sendFrom,
+				text: `You don't have enough points to accept <@${sendTo}>'s request.`,
+			});
+		}
+
 		await incrementPoints(sendTo, amount);
 		await decrementPoints(sendFrom, amount);
 

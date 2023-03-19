@@ -140,10 +140,12 @@ export async function execute({ ack, client, command, say }) {
 				},
 			],
 		});
+
+		return say(`Sent a request to <@${targetUser}> for *${amount} $TNDS* :peepoleave:`);
 	}
 	catch (error) {
 		console.error(error);
 	}
 
-	return say(`Sent a request to <@${targetUser}> for *${amount} $TNDS* :peepoleave:`);
+	return say('I couldn\'t process this request.');
 }

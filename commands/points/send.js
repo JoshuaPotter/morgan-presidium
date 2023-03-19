@@ -60,18 +60,28 @@ export async function execute({ client, command, ack, say }) {
 		return await say(`<@${slack_id}> You must send more than one tender :feelsdankman:`);
 	}
 
-	const user = await Users.findOne({
-		where: {
-			slack_id,
-		},
-	});
-	const userPoints = parseInt(user.points);
-	if (userPoints < amount) {
-		return await say(`<@${slack_id}> You don't have enough tendies to send.`);
+	try {
+		const user = await Users.findOne({
+			where: {
+				slack_id,
+			},
+		});
+		const userPoints = parseInt(user.points);
+		if (userPoints < amount) {
+			return await say(`<@${slack_id}> You don't have enough tendies to send.`);
+		}
+
+		await decrementPoints(slack_id, amount);
+		await incrementPoints(recipient, amount);
+
+		await say({
+			channel: recipient,
+			text: `<@${slack_id}> sent you *${amount} $TNDS* :peepohappy:`,
+		});
+		return await say(`Transferred *${amount} $TNDS* to <@${recipient}> :sparkles:`);
 	}
-
-	await decrementPoints(slack_id, amount);
-	await incrementPoints(recipient, amount);
-
-	return await say(`<@${slack_id}> sent *${amount} $TNDS* to <@${recipient}>!`);
+	catch (error) {
+		console.error(error);
+	}
+	return await say('I couldn\'t process this transfer.');
 }

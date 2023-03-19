@@ -19,28 +19,35 @@ export async function execute({ command, ack, say }) {
 		return await say(`<@${command.user_id}> You can only bet using a numeric value greater than zero :feelsdankman:`);
 	}
 
-	const slack_id = command.user_id;
-	const user = await Users.findOne({
-		where: {
-			slack_id,
-		},
-	});
-	const userPoints = parseInt(user.points);
-	if (userPoints < pointsToBet) {
-		return await say(`<@${command.user_id}> You don't have enough tendies.`);
+	try {
+		const slack_id = command.user_id;
+		const user = await Users.findOne({
+			where: {
+				slack_id,
+			},
+		});
+		const userPoints = parseInt(user.points);
+		if (userPoints < pointsToBet) {
+			return await say(`<@${command.user_id}> You don't have enough tendies.`);
+		}
+
+		const random = Math.random();
+
+		let msg = '';
+		if (random < 0.5) {
+			msg = `:chart_with_downwards_trend: <@${slack_id}> lost ${pointsToBet}... They now have ${userPoints - pointsToBet} $TNDS.`;
+			await decrementPoints(slack_id, pointsToBet);
+		}
+		else {
+			msg = `:chart_with_upwards_trend: <@${slack_id}> won ${pointsToBet}! They now have ${userPoints + pointsToBet} $TNDS.`;
+			await incrementPoints(slack_id, pointsToBet);
+		}
+
+		return await say(msg);
+	}
+	catch (error) {
+		console.error(error);
 	}
 
-	const random = Math.random();
-
-	let msg = '';
-	if (random < 0.5) {
-		msg = `:chart_with_downwards_trend: <@${slack_id}> lost ${pointsToBet}... They now have ${userPoints - pointsToBet} $TNDS.`;
-		await decrementPoints(slack_id, pointsToBet);
-	}
-	else {
-		msg = `:chart_with_upwards_trend: <@${slack_id}> won ${pointsToBet}! They now have ${userPoints + pointsToBet} $TNDS.`;
-		await incrementPoints(slack_id, pointsToBet);
-	}
-
-	return await say(msg);
+	return await say('I couldn\'t process this coin flip');
 }
