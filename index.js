@@ -72,11 +72,13 @@ app.error((error) => {
 			const handleMessage = async (...args) => {
 				const text = args[0].event.text;
 				if (message.hears instanceof RegExp) {
+					// Listener keyword is a RegExp
 					if (message.hears.test(text)) {
 						message.execute(...args);
 					}
 				}
 				else {
+					// Listener keyword is a string
 					const tokens = text.split(' ');
 					if (tokens.includes(message.hears)) {
 						message.execute(...args);
