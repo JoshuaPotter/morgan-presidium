@@ -7,8 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node .",
-    "dev:expose": "node localtunnel.js",
-    "lt": "npx lt --port 3000 --subdomain morgan-presidium",
+    "dev:expose": "npx lt --port 3000 --subdomain morgan-presidium",
     "start": "NODE_ENV=production node .",
     "eslint": "npx eslint --ext .js .",
     "eslint:fix": "npx eslint --ext .js . --fix"
