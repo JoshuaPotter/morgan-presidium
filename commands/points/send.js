@@ -74,7 +74,7 @@ export async function execute({ client, command, ack, say }) {
 		await decrementPoints(slack_id, amount);
 		await incrementPoints(recipient, amount);
 
-		await say({
+		await client.chat.postMessage({
 			channel: recipient,
 			text: `<@${slack_id}> sent you *${amount} $TNDS* :peepohappy:`,
 		});

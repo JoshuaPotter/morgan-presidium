@@ -42,9 +42,9 @@ export async function execute({ ack, client, command, say }) {
 		return await say(`<@${slack_id}> You must include a user to request tendies from :feelsdankman:`);
 	}
 
-	if (!targetUser === slack_id) {
-		return await say(`<@${slack_id}> You can't request tendies from yourself :feelsdankman:`);
-	}
+	// if (targetUser === slack_id) {
+	// 	return await say(`<@${slack_id}> You can't request tendies from yourself :feelsdankman:`);
+	// }
 
 	if (!amount || isNaN(amount)) {
 		return await say(`<@${slack_id}> You must include an amount of tendies to request :feelsdankman:`);
