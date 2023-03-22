@@ -1,17 +1,17 @@
 const possibleResponses = [
-	"np",
-	"no worries",
-	"always",
-	"i got you doggy dog",
+	'np',
+	'no worries',
+	'always',
+	'i got you doggy dog',
 ];
 
 // Bot listens for these keywords
 const keywords = [
 	'thanks',
 	'thank you',
-].join('|');
+];
 // Bot hears one of the keywords in a message
-export const hears = new RegExp(`.*(${keywords}).*`);
+export const hears = new RegExp(`.*(${keywords.join('|')}).*`);
 
 // Event action
 export async function execute({ say }) {

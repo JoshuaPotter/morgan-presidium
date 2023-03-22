@@ -1,8 +1,8 @@
 const possibleResponses = [
-	"it's ok",
-	"no worries",
-	"that's alright",
-	"np :)",
+	'it\'s ok',
+	'no worries',
+	'that\'s alright',
+	'np :)',
 ];
 
 // Bot hears this in a message

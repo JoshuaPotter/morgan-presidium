@@ -1,4 +1,4 @@
-export const hears = "It's a vape and skrillex kind of night.";
+export const hears = 'It\'s a vape and skrillex kind of night.';
 
 export async function execute({ message, say }) {
 	const { user, bot_id } = message;

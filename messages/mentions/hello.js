@@ -1,9 +1,9 @@
 const possibleResponses = [
-	"suh dude",
-	"yea",
-	"yes?",
-	"yo",
-	":catjam:",
+	'suh dude',
+	'yea',
+	'yes?',
+	'yo',
+	':catjam:',
 ];
 
 // Bot hears this in a message
