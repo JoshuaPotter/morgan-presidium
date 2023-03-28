@@ -11,4 +11,4 @@ Good to know: Use [Loophole.cloud](https://loophole.cloud/) as a tunnel for the 
 Not much. Currently, it...
 - Keeps a database of permalinks to messages that workspace users want to remember (usually for comedic purposes).
 - Posts random messages from the database on request. Messages can also be looked up by ID or tags.
-- Virtual points "economy" with coin flip betting.
+- An "economy", where users earn points by reacting to each other's messages, sending and requesting points from one another, and betting their points on coin flips and predictions.
