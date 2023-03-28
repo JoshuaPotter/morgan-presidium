@@ -1,34 +1,34 @@
-import Sequelize from 'sequelize';
-
 export default function(sequelize, DataTypes) {
-	return sequelize.define('lore', {
-		lore_id: {
+	return sequelize.define('messages', {
+		id: {
 			autoIncrement: true,
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 		},
-		lore_url: {
-			type: DataTypes.TEXT,
-			allowNull: false,
-		},
-		votes: {
+		lore_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			defaultValue: 0,
 		},
-		submitted_by: {
+		lore_url: {
 			type: DataTypes.STRING(255),
 			allowNull: false,
 		},
-		date: {
-			type: DataTypes.DATE,
+		text: {
+			type: DataTypes.TEXT,
 			allowNull: false,
-			defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP'),
+		},
+		author: {
+			type: DataTypes.STRING(255),
+			allowNull: false,
+		},
+		ts: {
+			type: DataTypes.STRING(255),
+			allowNull: false,
 		},
 	}, {
 		sequelize,
-		tableName: 'lore',
+		tableName: 'messages',
 		timestamps: false,
 		indexes: [
 			{
@@ -36,22 +36,43 @@ export default function(sequelize, DataTypes) {
 				unique: true,
 				using: 'BTREE',
 				fields: [
-					{ name: 'lore_id' },
+					{ name: 'id' },
+				],
+			},
+			{
+				name: 'id',
+				unique: true,
+				using: 'BTREE',
+				fields: [
+					{ name: 'id' },
 				],
 			},
 			{
 				name: 'lore_id',
-				unique: true,
 				using: 'BTREE',
 				fields: [
 					{ name: 'lore_id' },
 				],
 			},
 			{
-				name: 'submitted_by',
+				name: 'lore_url',
 				using: 'BTREE',
 				fields: [
-					{ name: 'submitted_by' },
+					{ name: 'lore_url' },
+				],
+			},
+			{
+				name: 'author',
+				using: 'BTREE',
+				fields: [
+					{ name: 'author' },
+				],
+			},
+			{
+				name: 'ts',
+				using: 'BTREE',
+				fields: [
+					{ name: 'ts' },
 				],
 			},
 		],

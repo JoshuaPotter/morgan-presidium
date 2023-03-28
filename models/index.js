@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import _channel from './channel.js';
 import _lore from './lore.js';
+import _messages from './messages.js';
 import _tags from './tags.js';
 import _tags_lore from './tags_lore.js';
 import _transactions from './transactions.js';
@@ -13,10 +14,12 @@ export default function initModels(sequelize) {
 	const LoreTags = _tags_lore(sequelize, DataTypes);
 	const Transactions = _transactions(sequelize, DataTypes);
 	const Users = _users(sequelize, DataTypes);
+	const Messages = _messages(sequelize, DataTypes);
 
 	return {
 		Channels,
 		Lore,
+		Messages,
 		Tags,
 		LoreTags,
 		Transactions,

@@ -1,4 +1,4 @@
-import sequelize from '../../sequelize.js';
+import sequelize from '../../lib/sequelize.js';
 import initModels from '../../models/index.js';
 const { Lore, Users } = initModels(sequelize);
 

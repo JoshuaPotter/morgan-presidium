@@ -1,13 +1,9 @@
 import bolt from '@slack/bolt';
-import * as dotenv from 'dotenv';
 import loadMethods from './lib/loadMethods.js';
 import loadScheduledJobs from './lib/loadScheduledJobs.js';
 
 console.log('Morgan v4 (aka "Presidium")');
 console.log('[Status] Initializing...');
-
-// Load environment variables.
-dotenv.config();
 
 // Initializes the app with a bot token and signing secret
 const { App } = bolt;

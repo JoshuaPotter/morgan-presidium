@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node .",
-    "dev:expose": "npx lt --port 3000 --subdomain morgan-presidium",
+    "dev:expose": "ssh -R  morgan-presidium:80:localhost:3000 serveo.net",
     "start": "NODE_ENV=production node .",
     "eslint": "npx eslint --ext .js .",
     "eslint:fix": "npx eslint --ext .js . --fix"
@@ -26,8 +26,8 @@
     "@types/node": "^18.15.0",
     "eslint": "^8.3.0",
     "eslint-plugin-import": "^2.27.5",
-    "localtunnel": "^2.0.2",
     "prettier": "2.8.4",
-    "sequelize-auto": "^0.8.8"
+    "sequelize-auto": "^0.8.8",
+    "sequelize-cli": "^6.6.0"
   }
 }

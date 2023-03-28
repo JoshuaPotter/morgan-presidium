@@ -1,4 +1,4 @@
-import sequelize from '../../sequelize.js';
+import sequelize from '../../lib/sequelize.js';
 import initModels from '../../models/index.js';
 import incrementPoints from '../../lib/points/incrementPoints.js';
 import decrementPoints from '../../lib/points/decerementPoints.js';
