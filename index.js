@@ -1,6 +1,7 @@
 import bolt from '@slack/bolt';
 import loadMethods from './lib/loadMethods.js';
 import loadScheduledJobs from './lib/loadScheduledJobs.js';
+import addUsersFromWorkspace from './lib/users/addUsersFromWorkspace.js';
 
 console.log('Morgan v4 (aka "Presidium")');
 console.log('[Status] Initializing...');
@@ -21,7 +22,8 @@ app.error((error) => {
 (async () => {
 	// Load methods into the app instance
 	await loadMethods(app);
-	await loadScheduledJobs(app.client);
+	await loadScheduledJobs();
+	await addUsersFromWorkspace();
 
 	// Start the app
 	await app.start(process.env.PORT || 3000);

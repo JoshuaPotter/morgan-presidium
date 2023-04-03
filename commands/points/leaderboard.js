@@ -10,12 +10,13 @@ export async function execute({ ack, say }) {
 	try {
 		const users = await Users.findAll({
 			order: [['points', 'DESC']],
+			limit: 5,
 		});
 		const formattedUsers = await Promise.all(users.map(async (user, index) => {
 			return `*#${index + 1}*. <@${user.slack_id}> — ${user.points} $TNDS`;
 		}));
 
-		return await say(`:technologist: :chart_with_upwards_trend: Users with the most tenders :tendie:\n\n${formattedUsers.join('\n')}`);
+		return await say(`:technologist: :chart_with_upwards_trend: Top 5 users by $TNDS :tendie:\n\n${formattedUsers.join('\n')}`);
 	}
 	catch (error) {
 		console.error(error);
