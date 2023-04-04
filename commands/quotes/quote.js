@@ -76,7 +76,14 @@ export async function execute({ client, command, ack, say }) {
 			const { lore_url, lore_id, submitted_by, tags, votes } = lore;
 
 			// Reply with quote
-			const message = await say(`*#${lore_id}* ${decodeURIComponent(lore_url)}`);
+			let decoded;
+			try {
+				decoded = decodeURIComponent(lore_url);
+			}
+			catch (error) {
+				decoded = unescape(lore_url);
+			}
+			const message = await say(`*#${lore_id}* ${decoded}`);
 
 			// Get display name from user id
 			const result = await client.users.info({
