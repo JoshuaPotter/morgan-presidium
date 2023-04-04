@@ -75,7 +75,7 @@ export async function execute({ client, command, ack, say }) {
 		if (lore !== null) {
 			const { lore_url, lore_id, submitted_by, tags, votes } = lore;
 
-			// Reply with quote
+			// Reply with quote.
 			let decoded;
 			try {
 				decoded = decodeURIComponent(lore_url);
