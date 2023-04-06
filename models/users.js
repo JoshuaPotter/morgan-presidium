@@ -16,6 +16,11 @@ export default function(sequelize, DataTypes) {
 			allowNull: false,
 			defaultValue: 0,
 		},
+		redeemed_daily_points: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: 0,
+		},
 	}, {
 		sequelize,
 		tableName: 'users',

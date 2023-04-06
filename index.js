@@ -6,7 +6,7 @@ import addUsersFromWorkspace from './lib/users/addUsersFromWorkspace.js';
 console.log('Morgan v4 (aka "Presidium")');
 console.log('[Status] Initializing...');
 
-// Initializes the app with a bot token and signing secret
+// Initializes the app with a bot token and signing secret.
 const { App } = bolt;
 const app = new App({
 	token: process.env.SLACK_BOT_TOKEN,
@@ -15,17 +15,21 @@ const app = new App({
 });
 
 app.error((error) => {
-	// Check the details of the error to handle cases where you should retry sending a message or stop the app
+	// Check the details of the error to handle cases where you should retry sending a message or stop the app.
 	console.log(error);
 });
 
 (async () => {
-	// Load methods into the app instance
-	await loadMethods(app);
-	await loadScheduledJobs();
-	await addUsersFromWorkspace();
+	// Get workspace users and load into database.
+	await addUsersFromWorkspace(app.client);
 
-	// Start the app
+	// Load methods into the app instance.
+	await loadMethods(app);
+
+	// Start repeatable jobs.
+	await loadScheduledJobs(app);
+
+	// Start the app.
 	await app.start(process.env.PORT || 3000);
 
 	console.log('[Status] Running...');
