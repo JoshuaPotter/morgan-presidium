@@ -1,8 +1,8 @@
-import sequelize from "../lib/sequelize.js";
-import initModels from "../models/index.js";
+import sequelize from '../lib/sequelize.js';
+import initModels from '../models/index.js';
 const { Users } = initModels(sequelize);
 
-export const name = "team_join";
+export const name = 'team_join';
 
 export async function execute({ event }) {
 	const { user } = event;

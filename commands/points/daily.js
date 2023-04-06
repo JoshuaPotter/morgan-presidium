@@ -1,8 +1,8 @@
-import sequelize from "../../lib/sequelize.js";
-import initModels from "../../models/index.js";
+import sequelize from '../../lib/sequelize.js';
+import initModels from '../../models/index.js';
 const { Users } = initModels(sequelize);
 
-export const name = "daily";
+export const name = 'daily';
 
 export async function execute({ ack, command, say }) {
 	await ack({ 'response_type': 'in_channel' });
