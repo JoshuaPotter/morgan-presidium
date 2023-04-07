@@ -15,13 +15,13 @@ export async function execute({ ack, command, say }) {
 			},
 		});
 
-		if (user.redeemed_weekly_points) {
+		if (user.redeemed_monthly_points) {
 			await say(`You already redeemed your *7500 monthly $TNDS*, check back next month <@${user_id}> :feelsdankman:`);
 		}
 		else {
 			await say(`<@${user_id}> redeemed *7500 monthly $TNDS* :pog:`);
 			await Users.update({
-				redeemed_weekly_points: 1,
+				redeemed_monthly_points: 1,
 				points: user.points + 7500,
 			}, {
 				where: {
