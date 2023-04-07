@@ -21,6 +21,16 @@ export default function(sequelize, DataTypes) {
 			allowNull: false,
 			defaultValue: 0,
 		},
+		redeemed_weekly_points: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: 0,
+		},
+		redeemed_monthly_points: {
+			type: DataTypes.BOOLEAN,
+			allowNull: false,
+			defaultValue: 0,
+		},
 	}, {
 		sequelize,
 		tableName: 'users',
