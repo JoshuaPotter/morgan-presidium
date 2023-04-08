@@ -20,6 +20,7 @@ export async function execute({ ack, say }) {
 				}, 100);
 			});
 		}
+		return true;
 	}
 	catch (error) {
 		console.error(error);
