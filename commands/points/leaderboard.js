@@ -4,14 +4,17 @@ const { Users } = initModels(sequelize);
 
 export const name = 'leaderboard';
 
-export async function execute({ ack, client, say }) {
+export async function execute({ ack, client, command, say }) {
 	await ack({ response_type: 'in_channel' });
 
 	try {
-		const users = await Users.findAll({
+		const options = {
 			order: [['points', 'DESC']],
-			limit: 5,
-		});
+		};
+		if (command.text !== 'all') {
+			options.limit = 5;
+		}
+		const users = await Users.findAll(options);
 		const formattedUsers = await Promise.all(users.map(async (user, index) => {
 			const { user: { profile } } = await client.users.info({ user: user.slack_id });
 			return `*#${index + 1}*. ${profile.display_name} — ${user.points} $TNDS`;
