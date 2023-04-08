@@ -10,6 +10,7 @@ export async function execute({ command, ack, say }) {
 	await ack({ 'response_type': 'in_channel' });
 	
 	let [diceRollTarget, pointsToBet] = command.text.split(' ');
+	diceRollTarget = parseInt(diceRollTarget);
 	pointsToBet = parseInt(pointsToBet);
 
 	if (!diceRollTarget) {
