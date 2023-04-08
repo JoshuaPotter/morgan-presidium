@@ -14,7 +14,7 @@ export async function execute({ ack, client, say }) {
 		});
 		const formattedUsers = await Promise.all(users.map(async (user, index) => {
 			const { user: { profile } } = await client.users.info({ user: user.slack_id });
-			return `*#${index + 1}*. <@${profile.display_name}> — ${user.points} $TNDS`;
+			return `*#${index + 1}*. ${profile.display_name} — ${user.points} $TNDS`;
 		}));
 
 		return await say(`:technologist: :chart_with_upwards_trend: Top 5 users by $TNDS :tendie:\n\n${formattedUsers.join('\n')}`);
