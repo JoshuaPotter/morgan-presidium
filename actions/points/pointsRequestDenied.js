@@ -24,7 +24,34 @@ export async function execute({ ack, body, client }) {
 						type: 'section',
 						text: {
 							type: 'mrkdwn',
-							text: `You denied <@${sendTo}>'s request for *${amount} $TNDS* :notlikethis:`,
+							text: `<@${sendTo}> requested *${amount} $TNDS*`,
+						},
+					},
+					{
+						type: 'divider',
+					},
+					{
+						type: 'context',
+						elements: [
+							{
+								type: 'mrkdwn',
+								text: 'Send $TNDS',
+							},
+							{
+								type: 'mrkdwn',
+								text: `*Amount:* ${amount} $TNDS`,
+							},
+							{
+								type: 'mrkdwn',
+								text: `*To:* <@${sendTo}>`,
+							},
+						],
+					},
+					{
+						type: 'section',
+						text: {
+							type: 'mrkdwn',
+							text: `❌ *You denied <@${sendTo}>'s request for ${amount} $TNDS* :notlikethis:`,
 						},
 					},
 				],

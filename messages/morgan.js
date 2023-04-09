@@ -1,5 +1,5 @@
 // Bot hears one of the keywords in a message
-export const hears = new RegExp('^(<@U01JYJVEM5H>).*');
+export const hears = new RegExp(/^<@U01JYJVEM5H>\s?$/);
 
 // Event action
 export async function execute({ say }) {
