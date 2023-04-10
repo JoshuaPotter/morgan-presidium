@@ -21,7 +21,7 @@ app.error((error) => {
 
 (async () => {
 	// Get workspace users and load into database.
-	await addUsersFromWorkspace(app.client);
+	// await addUsersFromWorkspace(app.client);
 
 	// Load methods into the app instance.
 	await loadMethods(app);
