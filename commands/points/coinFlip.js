@@ -39,7 +39,7 @@ export async function execute({ command, ack, say }) {
 			await decrementPoints(slack_id, pointsToBet);
 		}
 		else {
-			msg = `:chart_with_upwards_trend: <@${slack_id}> won ${pointsToBet}! They now have ${userPoints + pointsToBet} $TNDS.`;
+			msg = `:chart_with_upwards_trend: <@${slack_id}> won *${pointsToBet}*! They now have a balance of *${userPoints + pointsToBet} $TNDS*.`;
 			await incrementPoints(slack_id, pointsToBet);
 		}
 

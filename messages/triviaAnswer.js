@@ -20,7 +20,7 @@ export async function execute({ message, say }) {
 			removeQuestion(key);
 			try {
 				incrementPoints(user, 10);
-				await say(`:sparkles: *Correct! <@${user}> received *10 $TNDS*`);
+				await say(`:sparkles: *Correct!* <@${user}> received *10 $TNDS*.`);
 			}
 			catch(error) {
 				console.error(error);
