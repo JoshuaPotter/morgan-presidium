@@ -2,7 +2,6 @@ import bolt from '@slack/bolt';
 import loadMethods from './lib/loadMethods.js';
 import loadScheduledJobs from './lib/loadScheduledJobs.js';
 import addUsersFromWorkspace from './lib/users/addUsersFromWorkspace.js';
-import questions from './lib/trivia/activeTriviaQuestions';
 
 console.log('Morgan v4 (aka "Presidium")');
 console.log('[Status] Initializing...');
