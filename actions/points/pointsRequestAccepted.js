@@ -1,3 +1,4 @@
+import pointsRequest from '../../lib/blocks/pointsRequest.js';
 import decrementPoints from '../../lib/points/decerementPoints.js';
 import getUserPoints from '../../lib/points/getUserPoints.js';
 import incrementPoints from '../../lib/points/incrementPoints.js';
@@ -25,8 +26,10 @@ export async function execute({ ack, body, client }) {
 			});
 		}
 
-		await incrementPoints(sendTo, amount);
-		await decrementPoints(sendFrom, amount);
+		await Promise.all([
+			incrementPoints(sendTo, amount),
+			decrementPoints(sendFrom, amount),
+		]);
 
 		try {
 			// Update initial request prompt
@@ -34,35 +37,9 @@ export async function execute({ ack, body, client }) {
 				channel: body.channel.id,
 				as_user: true,
 				ts: body.message.ts,
-				text: `You accepted <@${sendTo}>'s request for *${amount} $TNDS* :peepohappy:`,
+				text: `✅ *You accepted <@${sendTo}>'s request for ${amount} $TNDS* :peepohappy:`,
 				blocks: [
-					{
-						type: 'section',
-						text: {
-							type: 'mrkdwn',
-							text: `<@${sendTo}> requested *${amount} $TNDS*`,
-						},
-					},
-					{
-						type: 'divider',
-					},
-					{
-						type: 'context',
-						elements: [
-							{
-								type: 'mrkdwn',
-								text: 'Send $TNDS',
-							},
-							{
-								type: 'mrkdwn',
-								text: `*Amount:* ${amount} $TNDS`,
-							},
-							{
-								type: 'mrkdwn',
-								text: `*To:* <@${sendTo}>`,
-							},
-						],
-					},
+					...pointsRequest(sendTo, amount),
 					{
 						type: 'section',
 						text: {

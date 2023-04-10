@@ -1,3 +1,5 @@
+import pointsRequest from '../../lib/blocks/pointsRequest.js';
+
 export const name = 'pointsRequestDenied';
 
 export async function execute({ ack, body, client }) {
@@ -18,35 +20,9 @@ export async function execute({ ack, body, client }) {
 				channel: body.channel.id,
 				as_user: true,
 				ts: body.message.ts,
-				text: `You denied <@${sendTo}>'s request for *${amount} $TNDS* :notlikethis:`,
+				text: `❌ *You denied <@${sendTo}>'s request for ${amount} $TNDS* :notlikethis:`,
 				blocks: [
-					{
-						type: 'section',
-						text: {
-							type: 'mrkdwn',
-							text: `<@${sendTo}> requested *${amount} $TNDS*`,
-						},
-					},
-					{
-						type: 'divider',
-					},
-					{
-						type: 'context',
-						elements: [
-							{
-								type: 'mrkdwn',
-								text: 'Send $TNDS',
-							},
-							{
-								type: 'mrkdwn',
-								text: `*Amount:* ${amount} $TNDS`,
-							},
-							{
-								type: 'mrkdwn',
-								text: `*To:* <@${sendTo}>`,
-							},
-						],
-					},
+					...pointsRequest(sendTo, amount),
 					{
 						type: 'section',
 						text: {

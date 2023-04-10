@@ -1,4 +1,4 @@
-export const name = "say";
+export const name = 'say';
 
 export async function execute({ ack, command, say }) {
 	await ack();

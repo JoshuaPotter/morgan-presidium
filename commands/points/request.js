@@ -1,3 +1,5 @@
+import pointsRequest from '../../lib/blocks/pointsRequest.js';
+
 export const name = 'request';
 
 export async function execute({ ack, client, command, say }) {
@@ -42,9 +44,9 @@ export async function execute({ ack, client, command, say }) {
 		return await say(`<@${slack_id}> You must include a user to request tendies from :feelsdankman:`);
 	}
 
-	// if (targetUser === slack_id) {
-	// 	return await say(`<@${slack_id}> You can't request tendies from yourself :feelsdankman:`);
-	// }
+	if (targetUser === slack_id) {
+		return await say(`<@${slack_id}> You can't request tendies from yourself :feelsdankman:`);
+	}
 
 	if (!amount || isNaN(amount)) {
 		return await say(`<@${slack_id}> You must include an amount of tendies to request :feelsdankman:`);
@@ -68,33 +70,7 @@ export async function execute({ ack, client, command, say }) {
 				},
 			},
 			blocks: [
-				{
-					type: 'section',
-					text: {
-						type: 'mrkdwn',
-						text: `<@${slack_id}> requested *${amount} $TNDS*`,
-					},
-				},
-				{
-					type: 'divider',
-				},
-				{
-					type: 'context',
-					elements: [
-						{
-							type: 'mrkdwn',
-							text: 'Send $TNDS',
-						},
-						{
-							type: 'mrkdwn',
-							text: `*Amount:* ${amount} $TNDS`,
-						},
-						{
-							type: 'mrkdwn',
-							text: `*To:* <@${slack_id}>`,
-						},
-					],
-				},
+				...pointsRequest(slack_id, amount),
 				{
 					type: 'actions',
 					elements: [

@@ -4,11 +4,11 @@ import incrementPoints from '../../lib/points/incrementPoints.js';
 import decrementPoints from '../../lib/points/decerementPoints.js';
 const { Users } = initModels(sequelize);
 
-export const name = 'rolldice';
+export const name = 'diceRoll';
 
 export async function execute({ command, ack, say }) {
 	await ack({ 'response_type': 'in_channel' });
-	
+
 	let [diceRollTarget, pointsToBet] = command.text.split(' ');
 	diceRollTarget = parseInt(diceRollTarget);
 	pointsToBet = parseInt(pointsToBet);
@@ -42,12 +42,15 @@ export async function execute({ command, ack, say }) {
 		if (userWonDiceRoll && userIsBettingTendies) {
 			msg = `:chart_with_upwards_trend: <@${slack_id}> rolled ${diceRoll} and won ${pointsToBet}! They now have ${userPoints + pointsToBet} $TNDS.`;
 			await incrementPoints(slack_id, pointsToBet);
-		} else if (!userWonDiceRoll && userIsBettingTendies) {
+		}
+		else if (!userWonDiceRoll && userIsBettingTendies) {
 			msg = `:chart_with_downwards_trend: <@${slack_id}> rolled ${diceRoll} and lost ${pointsToBet}... They now have ${userPoints - pointsToBet} $TNDS.`;
 			await decrementPoints(slack_id, pointsToBet);
-		} else if (userWonDiceRoll) {
+		}
+		else if (userWonDiceRoll) {
 			msg = `:chart_with_upwards_trend: <@${slack_id}> rolled ${diceRoll} and won!`;
-		} else {
+		}
+		else {
 			msg = `:chart_with_downwards_trend: <@${slack_id}> rolled ${diceRoll} and lost...`;
 		}
 
