@@ -12,11 +12,19 @@ export async function execute({ message, say }) {
 			return;
 		}
 
+		// Check if the text is the answer to any active questions. If correct, remove trivia question from the pool and assign points to user.
 		const key = convertToKey(text);
-		if (getQuestion(key) !== null) {
+		const trivia = getQuestion(key);
+		if (trivia !== null) {
+			clearTimeout(trivia.timeoutId);
 			removeQuestion(key);
-			incrementPoints(user, 10);
-			await say(`:sparkles: *Correct! <@${user}> received *10 $TNDS*`);
+			try {
+				incrementPoints(user, 10);
+				await say(`:sparkles: *Correct! <@${user}> received *10 $TNDS*`);
+			}
+			catch(error) {
+				console.error(error);
+			}
 		}
 	}
 }
