@@ -12,9 +12,9 @@ export const name = 'trivia';
 export async function execute({ ack, say }) {
 	await ack({ 'response_type': 'in_channel' });
 
-	const questions = await getTriviaQuestion();
-	if (questions.ok) {
-		for (const trivia of questions.data) {
+	const triviaQuestions = await getTriviaQuestion();
+	if (triviaQuestions.ok) {
+		for (const trivia of triviaQuestions.data) {
 			const { category, question, answer } = trivia;
 			const key = setQuestion(question, answer);
 			await say({
