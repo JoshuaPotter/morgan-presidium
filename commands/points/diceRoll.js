@@ -4,7 +4,7 @@ import incrementPoints from '../../lib/points/incrementPoints.js';
 import decrementPoints from '../../lib/points/decerementPoints.js';
 const { Users } = initModels(sequelize);
 
-export const name = 'diceRoll';
+export const name = 'diceroll';
 
 export async function execute({ command, ack, say }) {
 	await ack({ 'response_type': 'in_channel' });
