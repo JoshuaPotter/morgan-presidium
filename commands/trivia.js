@@ -1,7 +1,11 @@
-import { setQuestion, removeQuestion } from "../lib/trivia/activeTriviaQuestions.js";
+import { setQuestion, removeQuestion, questions } from "../lib/trivia/activeTriviaQuestions.js";
 import getTriviaQuestion from "../lib/trivia/getTriviaQuestion.js";
 
-const questionTimeout = 30; // in seconds
+// Clear any active trivia questions from any previous session
+questions.clear();
+
+// in seconds
+const questionTimeout = 30;
 
 export const name = 'trivia';
 
