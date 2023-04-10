@@ -1,11 +1,8 @@
-import { setQuestion, removeQuestion, questions } from "../lib/trivia/activeTriviaQuestions.js";
+import { setQuestion, removeQuestion, questions, convertToKey } from "../lib/trivia/activeTriviaQuestions.js";
 import getTriviaQuestion from "../lib/trivia/getTriviaQuestion.js";
 
 // Clear any active trivia questions from any previous session
 questions.clear();
-
-// in seconds
-const questionTimeout = 30;
 
 export const name = 'trivia';
 
@@ -16,33 +13,8 @@ export async function execute({ ack, say }) {
 	if (triviaQuestions.ok) {
 		for (const trivia of triviaQuestions.data) {
 			const { category, question, answer } = trivia;
-			const key = setQuestion(question, answer);
-			await say({
-				text: question,
-				blocks: [
-					{
-						type: 'section',
-						text: {
-							type: 'mrkdwn',
-							text: question,
-						},
-					},
-					{
-						type: 'divider',
-					},
-					{
-						type: 'context',
-						elements: [
-							{
-								type: 'mrkdwn',
-								text: `*Category*: ${category.charAt(0).toUpperCase()}${category.slice(1)}`,
-							},
-						],
-					},
-				],
-			});
-
-			setTimeout(async () => {
+			const intervalId = setTimeout(async () => {
+				const key = convertToKey(answer);
 				removeQuestion(key);
 				await say({
 					text: `*Out of time!* The correct answer was *${answer}* :val:`,
@@ -72,7 +44,33 @@ export async function execute({ ack, say }) {
 						},
 					],
 				});
-			}, questionTimeout * 1000);
+			}, 30 * 1000);
+
+			setQuestion(question, answer, intervalId);
+			await say({
+				text: question,
+				blocks: [
+					{
+						type: 'section',
+						text: {
+							type: 'mrkdwn',
+							text: question,
+						},
+					},
+					{
+						type: 'divider',
+					},
+					{
+						type: 'context',
+						elements: [
+							{
+								type: 'mrkdwn',
+								text: `*Category*: ${category.charAt(0).toUpperCase()}${category.slice(1)}`,
+							},
+						],
+					},
+				],
+			});
 		}
 	}
 }

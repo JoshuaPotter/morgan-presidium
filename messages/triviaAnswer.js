@@ -15,8 +15,8 @@ export async function execute({ message, say }) {
 		const key = convertToKey(text);
 		if (getQuestion(key) !== null) {
 			removeQuestion(key);
-			await say(`:sparkles: *Correct!* +10 $TNDS to <@${user}>`);
 			incrementPoints(user, 10);
+			await say(`:sparkles: *Correct! <@${user}> received *10 $TNDS*`);
 		}
 	}
 }
