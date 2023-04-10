@@ -1,11 +1,10 @@
 import incrementPoints from "../lib/points/incrementPoints.js";
-import activeTriviaQuestions from "../lib/trivia/activeTriviaQuestions.js";
+import { hasQuestions, getQuestion, removeQuestion, convertToKey } from "../lib/trivia/activeTriviaQuestions.js";
 
 export const hears = new RegExp(/^(.*)$/);
 
 export async function execute({ message, say }) {
-	if (activeTriviaQuestions.length) {
-		console.log(message);
+	if (hasQuestions) {
 		const { user, bot_id, text } = message;
 
 		// User is not a bot
@@ -13,9 +12,9 @@ export async function execute({ message, say }) {
 			return;
 		}
 
-		const key = Buffer.from(text.toLowerCase()).toString('base64');
-		if (activeTriviaQuestions.getItem(key) !== null) {
-			activeTriviaQuestions.removeItem(key);
+		const key = convertToKey(text);
+		if (getQuestion(key) !== null) {
+			removeQuestion(key);
 			await say(`:sparkles: *Correct!* +10 $TNDS to <@${user}>`);
 			incrementPoints(user, 10);
 		}

@@ -1,15 +1,5 @@
-import activeTriviaQuestions from "../lib/trivia/activeTriviaQuestions.js";
+import { setQuestion, removeQuestion } from "../lib/trivia/activeTriviaQuestions.js";
 import getTriviaQuestion from "../lib/trivia/getTriviaQuestion.js";
-
-function setQuestion(question, answer) {
-	const key = Buffer.from(answer.toLowerCase()).toString('base64');
-	activeTriviaQuestions.setItem(key, JSON.stringify({ question, answer }));
-	return key;
-}
-
-function removeQuestion(key) {
-	activeTriviaQuestions.removeItem(key);
-}
 
 const questionTimeout = 30; // in seconds
 
@@ -21,7 +11,6 @@ export async function execute({ ack, say }) {
 	const questions = await getTriviaQuestion();
 	if (questions.ok) {
 		for (const trivia of questions.data) {
-			console.log(trivia);
 			const { category, question, answer } = trivia;
 			const key = setQuestion(question, answer);
 			await say({
