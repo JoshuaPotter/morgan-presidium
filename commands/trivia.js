@@ -47,7 +47,6 @@ export async function execute({ ack, say }) {
 				}, 30 * 1000);
 
 				// Add question to the pool of active questions and send to channel.
-				setQuestion(question, answer, timeoutId);
 				await say({
 					text: question,
 					blocks: [
@@ -72,6 +71,7 @@ export async function execute({ ack, say }) {
 						},
 					],
 				});
+				setQuestion(question, answer, timeoutId);
 			}
 		}
 	}
