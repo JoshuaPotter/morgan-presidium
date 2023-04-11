@@ -34,7 +34,7 @@ export async function execute({ command, ack, say }) {
 		const random = Math.random();
 
 		let msg = '';
-		if (random < 0.5) {
+		if (random < 0.495) {
 			msg = `:chart_with_downwards_trend: <@${slack_id}> lost ${pointsToBet}... They now have ${userPoints - pointsToBet} $TNDS.`;
 			await decrementPoints(slack_id, pointsToBet);
 		}
