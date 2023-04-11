@@ -1,5 +1,5 @@
-import { setQuestion, removeQuestion, questions, convertToKey } from "../lib/trivia/activeTriviaQuestions.js";
-import getTriviaQuestion from "../lib/trivia/getTriviaQuestion.js";
+import { setQuestion, removeQuestion, convertToKey } from '../lib/trivia/activeTriviaQuestions.js';
+import getTriviaQuestion from '../lib/trivia/getTriviaQuestion.js';
 
 export const name = 'trivia';
 
@@ -75,7 +75,7 @@ export async function execute({ ack, say }) {
 			}
 		}
 	}
-	catch(error) {
+	catch (error) {
 		console.error(error);
 	}
 }
