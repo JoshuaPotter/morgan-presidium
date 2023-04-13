@@ -16,7 +16,7 @@ export async function execute({ message, say }) {
 		const { isCorrect, responseTime } = compareAnswer(text);
 		if (isCorrect) {
 			try {
-				const awardedPoints = responseTime < 6 ? 50 : 20;
+				const awardedPoints = responseTime < 6 ? 100 : 50;
 				await incrementPoints(user, awardedPoints);
 				await say(`:sparkles: *Correct (response time: ${responseTime}s)!* <@${user}> received *${awardedPoints} $TNDS*.`);
 			}
