@@ -18,7 +18,7 @@ export async function execute({ message, say }) {
 			try {
 				const awardedPoints = responseTime < 6 ? 50 : 20;
 				await incrementPoints(user, awardedPoints);
-				await say(`:sparkles: *Correct (response time: ${responseTime}s)!* <@${user}> received *awardedPoints $TNDS*.`);
+				await say(`:sparkles: *Correct (response time: ${responseTime}s)!* <@${user}> received *${awardedPoints} $TNDS*.`);
 			}
 			catch (error) {
 				console.error(error);
