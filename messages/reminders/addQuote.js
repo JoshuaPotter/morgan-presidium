@@ -1,4 +1,4 @@
-import { slackLinkRegex } from "../../lib/misc/isSlackLink.js";
+import { slackLinkRegex } from '../../lib/misc/isSlackLink.js';
 
 // Bot hears one of the keywords in a message
 const regexString = slackLinkRegex.toString();
